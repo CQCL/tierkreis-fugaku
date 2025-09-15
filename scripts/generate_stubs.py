@@ -4,7 +4,7 @@ from tierkreis import Worker
 from tierkreis.namespace import Namespace
 
 REPO_DIR = Path(__file__).parent.parent
-TSP_WORKERS = [REPO_DIR / "workers" / "sqcsub" / "schema.tsp"]
+TSP_WORKERS = [REPO_DIR / "workers" / "tkr_sqcsub" / "schema.tsp"]
 
 
 def generate_tsp_stubs(tsp_path: Path):
