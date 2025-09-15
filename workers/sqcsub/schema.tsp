@@ -2,9 +2,8 @@ interface sqcsub {
     submit(
         nqubits: integer,
         nshots: integer,
-        ifile: string,
+        ifile: bytes,
         iformat: string,
-        ofile: string,
         oformat: string,
         qpu: string,
     ): bytes;

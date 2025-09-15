@@ -10,6 +10,9 @@ dependencies = [
     "tierkreis>=2.0.2",
 ]
 
+[tool.uv]
+package=true
+
 [dependency-groups]
 dev = [
     "ruff>=0.13.0",
