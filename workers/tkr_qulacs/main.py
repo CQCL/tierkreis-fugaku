@@ -5,7 +5,7 @@ from pytket._tket.circuit import Circuit
 from pytket.backends.backendresult import BackendResult
 from pytket.extensions.qulacs.backends.qulacs_backend import QulacsBackend
 
-worker = Worker("qulacs")
+worker = Worker("tkr_qulacs")
 
 
 @worker.task()

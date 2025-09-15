@@ -1,4 +1,4 @@
-"""Code generated from qulacs namespace. Please do not edit."""
+"""Code generated from tkr_qulacs namespace. Please do not edit."""
 
 from typing import NamedTuple, Sequence
 from tierkreis.controller.data.models import TKR, OpaqueType
@@ -14,7 +14,7 @@ class compile(NamedTuple):
 
     @property
     def namespace(self) -> str:
-        return "qulacs"
+        return "tkr_qulacs"
 
 
 class submit(NamedTuple):
@@ -27,4 +27,4 @@ class submit(NamedTuple):
 
     @property
     def namespace(self) -> str:
-        return "qulacs"
+        return "tkr_qulacs"
