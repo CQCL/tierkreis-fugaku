@@ -6,6 +6,8 @@ input_iformat_value=$(cat $input_iformat_file)
 input_oformat_value=$(cat $input_oformat_file)
 input_qpu_value=$(cat $input_qpu_file)
 
+. /vol0300/share/ra010014/jhpcq/x86/setenv-sqcsub.sh input_qpu_value
+
 sqcsub --nqubits $input_nqubits_value \
     --nshots $input_nshots_value \
     --ifile $input_ifile_file \
