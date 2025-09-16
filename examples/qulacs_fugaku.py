@@ -43,13 +43,14 @@ def pjsub_uv_executor(group_name: str, logs_path: Path) -> PJSUBExecutor:
         command=command,
         resource=ResourceSpec(nodes=5, memory_gb=None, gpus_per_node=None),
         walltime="00:15:00",
-        environment={"PJM_LLIO_GFSCACHE": "/vol0004"},
         mpi=MpiSpec(),
         output_path=Path(logs_path),
         error_path=Path(logs_path),
         include_no_check_directory_flag=True,
     )
-    return PJSUBExecutor(WORKERS_DIR, logs_path, spec)
+    return PJSUBExecutor(
+        WORKERS_DIR, logs_path, spec, command="pjsub -x PJM_LLIO_GFSCACHE=/vol0004"
+    )
 
 
 def main(group_name: str):
