@@ -30,6 +30,7 @@ storage = FileStorage(UUID(int=105), do_cleanup=True)
 uv = UvExecutor(WORKERS_DIR, storage.logs_path)
 
 command = (
+    "export PJM_LLIO_GFSCACHE=/vol0004 && "
     ". /vol0004/apps/oss/spack/share/spack/setup-env.sh && "
     "spack load boost && "
     "env PJM_LLIO_GFSCACHE=/vol0004 OMP_NUM_THREADS=10 UV_PROJECT_ENVIRONMENT=compute_venv uv run main.py"
