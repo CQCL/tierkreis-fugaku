@@ -29,7 +29,7 @@ def graph():
     g = GraphBuilder(EmptyModel, TKR[list[BackendResult]])
     circuits = g.task(example_circuit_list())
     compiled_circuits = g.task(compile(circuits, g.const(2)))
-    results = g.task(submit(compiled_circuits, g.const(30)))
+    results = g.task(submit(compiled_circuits, g.const(10000)))
     g.outputs(results)
     return g
 
@@ -60,7 +60,7 @@ def main(group_name: str, resume: bool):
         resume_graph(storage, executor, polling_interval_seconds=2)
     else:
         run_graph(storage, executor, graph().get_data(), {}, polling_interval_seconds=2)
-    print(read_outputs(graph().get_data(), storage))
+    print(len(read_outputs(graph().get_data(), storage)))  # type: ignore
 
 
 if __name__ == "__main__":
