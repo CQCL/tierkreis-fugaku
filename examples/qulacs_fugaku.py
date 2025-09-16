@@ -17,7 +17,7 @@ from workers.examples_worker.stubs import example_circuit_list
 from workers.tkr_qulacs.stubs import compile, submit
 
 BackendResult = Literal[OpaqueType["pytket.backends.backendresult.BackendResult"]]
-storage = FileStorage(UUID(int=105), do_cleanup=True)
+storage = FileStorage(UUID(int=105))
 uv = UvExecutor(WORKERS_DIR, storage.logs_path)
 command = (
     ". /vol0004/apps/oss/spack/share/spack/setup-env.sh && "
@@ -60,6 +60,7 @@ def main(group_name: str, resume: bool):
     if resume:
         resume_graph(storage, executor, polling_interval_seconds=2)
     else:
+        storage.clean_graph_files()
         run_graph(storage, executor, graph().get_data(), {}, polling_interval_seconds=2)
     print(len(read_outputs(graph().get_data(), storage)))  # type: ignore
 
