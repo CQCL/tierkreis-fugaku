@@ -17,9 +17,6 @@ from workers.tkr_qulacs.stubs import compile, submit
 BackendResult = Literal[OpaqueType["pytket.backends.backendresult.BackendResult"]]
 
 
-BackendResult = Literal[OpaqueType["pytket.backends.backendresult.BackendResult"]]
-
-
 def graph():
     g = GraphBuilder(EmptyModel, TKR[list[BackendResult]])
     circuits = g.task(example_circuit_list())
@@ -32,12 +29,18 @@ def graph():
 storage = FileStorage(UUID(int=105), do_cleanup=True)
 uv = UvExecutor(WORKERS_DIR, storage.logs_path)
 
+command = (
+    ". /vol0004/apps/oss/spack/share/spack/setup-env.sh && "
+    "spack load boost && "
+    "env OMP_NUM_THREADS=10 UV_PROJECT_ENVIRONMENT=compute_venv uv run main.py"
+)
+
 
 def pjsub_uv_executor(group_name: str, logs_path: Path) -> PJSUBExecutor:
     spec = JobSpec(
         job_name="tkr_symbolic_ciruits",
         account=group_name,
-        command="env OMP_NUM_THREADS=10 UV_PROJECT_ENVIRONMENT=compute_venv uv run main.py",
+        command=command,
         resource=ResourceSpec(nodes=5, memory_gb=None, gpus_per_node=None),
         walltime="00:15:00",
         mpi=MpiSpec(),
