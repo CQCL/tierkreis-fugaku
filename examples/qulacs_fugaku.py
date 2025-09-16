@@ -59,7 +59,7 @@ def main(group_name: str):
         {"pjsub": pjsub_uv_executor(group_name, storage.logs_path)},
         {"tkr_qulacs": "pjsub"},
     )
-    run_graph(storage, executor, graph().get_data(), {})
+    run_graph(storage, executor, graph().get_data(), {}, polling_interval_seconds=2)
     result = read_outputs(graph().get_data(), storage)
     print(result)
 
