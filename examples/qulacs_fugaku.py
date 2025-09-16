@@ -16,6 +16,13 @@ from workers.examples_worker.stubs import example_circuit_list
 from workers.tkr_qulacs.stubs import compile, submit
 
 BackendResult = Literal[OpaqueType["pytket.backends.backendresult.BackendResult"]]
+storage = FileStorage(UUID(int=105), do_cleanup=True)
+uv = UvExecutor(WORKERS_DIR, storage.logs_path)
+command = (
+    ". /vol0004/apps/oss/spack/share/spack/setup-env.sh && "
+    "spack load /slvpnrm && "  # load boost@1.83.0%fj@4.10.0 arch=linux-rhel8-a64fx
+    "env OMP_NUM_THREADS=10 UV_PROJECT_ENVIRONMENT=compute_venv uv run main.py"
+)
 
 
 def graph():
@@ -25,16 +32,6 @@ def graph():
     results = g.task(submit(compiled_circuits, g.const(30)))
     g.outputs(results)
     return g
-
-
-storage = FileStorage(UUID(int=105))
-uv = UvExecutor(WORKERS_DIR, storage.logs_path)
-
-command = (
-    ". /vol0004/apps/oss/spack/share/spack/setup-env.sh && "
-    "spack load /slvpnrm && "  # load boost@1.83.0%fj@4.10.0 arch=linux-rhel8-a64fx
-    "env OMP_NUM_THREADS=10 UV_PROJECT_ENVIRONMENT=compute_venv uv run main.py"
-)
 
 
 def pjsub_uv_executor(group_name: str, logs_path: Path) -> PJSUBExecutor:
@@ -63,8 +60,7 @@ def main(group_name: str, resume: bool):
         resume_graph(storage, executor, polling_interval_seconds=2)
     else:
         run_graph(storage, executor, graph().get_data(), {}, polling_interval_seconds=2)
-    result = read_outputs(graph().get_data(), storage)
-    print(result)
+    print(read_outputs(graph().get_data(), storage))
 
 
 if __name__ == "__main__":

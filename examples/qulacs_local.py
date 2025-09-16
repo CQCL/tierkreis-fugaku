@@ -12,6 +12,8 @@ from workers.examples_worker.stubs import example_circuit_list
 from workers.tkr_qulacs.stubs import compile, submit
 
 BackendResult = Literal[OpaqueType["pytket.backends.backendresult.BackendResult"]]
+storage = FileStorage(UUID(int=105), do_cleanup=True)
+executor = UvExecutor(WORKERS_DIR, storage.logs_path)
 
 
 def graph():
@@ -23,8 +25,6 @@ def graph():
     return g
 
 
-storage = FileStorage(UUID(int=105), do_cleanup=True)
-executor = UvExecutor(WORKERS_DIR, storage.logs_path)
-run_graph(storage, executor, graph().get_data(), {})
-result = read_outputs(graph().get_data(), storage)
-print(result)
+if __name__ == "__main__":
+    run_graph(storage, executor, graph().get_data(), {})
+    print(read_outputs(graph().get_data(), storage))
