@@ -30,9 +30,8 @@ storage = FileStorage(UUID(int=105), do_cleanup=True)
 uv = UvExecutor(WORKERS_DIR, storage.logs_path)
 
 command = (
-    "export PJM_LLIO_GFSCACHE=/vol0004 && "
     ". /vol0004/apps/oss/spack/share/spack/setup-env.sh && "
-    "spack load /slvpnrm && "
+    "spack load /slvpnrm && "  # load boost@1.83.0%fj@4.10.0 arch=linux-rhel8-a64fx
     "env OMP_NUM_THREADS=10 UV_PROJECT_ENVIRONMENT=compute_venv uv run main.py"
 )
 
@@ -45,8 +44,8 @@ def pjsub_uv_executor(group_name: str, logs_path: Path) -> PJSUBExecutor:
         resource=ResourceSpec(nodes=5, memory_gb=None, gpus_per_node=None),
         walltime="00:15:00",
         mpi=MpiSpec(),
-        output_path=Path(logs_path),
-        error_path=Path(logs_path),
+        output_path=Path("./output"),
+        error_path=Path("./errors"),
         environment={"PJM_LLIO_GFSCACHE": "/vol0004"},
         include_no_check_directory_flag=True,
     )
