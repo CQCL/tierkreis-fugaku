@@ -32,7 +32,7 @@ uv = UvExecutor(WORKERS_DIR, storage.logs_path)
 command = (
     ". /vol0004/apps/oss/spack/share/spack/setup-env.sh && "
     "spack load boost && "
-    "env OMP_NUM_THREADS=10 UV_PROJECT_ENVIRONMENT=compute_venv uv run main.py"
+    "env PJM_LLIO_GFSCACHE=/vol0004 OMP_NUM_THREADS=10 UV_PROJECT_ENVIRONMENT=compute_venv uv run main.py"
 )
 
 
@@ -48,9 +48,7 @@ def pjsub_uv_executor(group_name: str, logs_path: Path) -> PJSUBExecutor:
         error_path=Path(logs_path),
         include_no_check_directory_flag=True,
     )
-    return PJSUBExecutor(
-        WORKERS_DIR, logs_path, spec, command="pjsub -x PJM_LLIO_GFSCACHE=/vol0004 "
-    )
+    return PJSUBExecutor(WORKERS_DIR, logs_path, spec)
 
 
 def main(group_name: str):
