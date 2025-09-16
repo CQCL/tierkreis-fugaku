@@ -49,7 +49,7 @@ def pjsub_uv_executor(group_name: str, logs_path: Path) -> PJSUBExecutor:
         error_path=Path(logs_path),
         include_no_check_directory_flag=True,
     )
-    return PJSUBExecutor(WORKERS_DIR, logs_path, spec)
+    return PJSUBExecutor(WORKERS_DIR, logs_path, spec, command=" pjsub -X ")
 
 
 def main(group_name: str):
