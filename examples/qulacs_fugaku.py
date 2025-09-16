@@ -3,6 +3,7 @@ from sys import argv
 from typing import Literal
 from uuid import UUID
 from tierkreis import run_graph
+from tierkreis.controller import resume_graph
 from tierkreis.controller.data.models import OpaqueType
 from tierkreis.storage import FileStorage, read_outputs  # type: ignore
 from tierkreis.executor import UvExecutor, PJSUBExecutor, MultipleExecutor
@@ -26,7 +27,7 @@ def graph():
     return g
 
 
-storage = FileStorage(UUID(int=105), do_cleanup=True)
+storage = FileStorage(UUID(int=105))
 uv = UvExecutor(WORKERS_DIR, storage.logs_path)
 
 command = (
@@ -52,16 +53,20 @@ def pjsub_uv_executor(group_name: str, logs_path: Path) -> PJSUBExecutor:
     return PJSUBExecutor(WORKERS_DIR, logs_path, spec)
 
 
-def main(group_name: str):
+def main(group_name: str, resume: bool):
     executor = MultipleExecutor(
         uv,
         {"pjsub": pjsub_uv_executor(group_name, storage.logs_path)},
         {"tkr_qulacs": "pjsub"},
     )
-    run_graph(storage, executor, graph().get_data(), {}, polling_interval_seconds=2)
+    if resume:
+        resume_graph(storage, executor, polling_interval_seconds=2)
+    else:
+        run_graph(storage, executor, graph().get_data(), {}, polling_interval_seconds=2)
     result = read_outputs(graph().get_data(), storage)
     print(result)
 
 
 if __name__ == "__main__":
-    main(argv[1])
+    resume = False if len(argv) < 3 else argv[2].lower() == "true"
+    main(argv[1], resume)
