@@ -16,12 +16,12 @@ from workers.examples_worker.stubs import example_circuit_list
 from workers.tkr_qulacs.stubs import compile, submit
 
 BackendResult = Literal[OpaqueType["pytket.backends.backendresult.BackendResult"]]
-storage = FileStorage(UUID(int=105), do_cleanup=True)
+storage = FileStorage(UUID(int=106), do_cleanup=True)
 uv = UvExecutor(WORKERS_DIR, storage.logs_path)
 command = (
     ". /vol0004/apps/oss/spack/share/spack/setup-env.sh && "
     "spack load /slvpnrm && "  # load boost@1.83.0%fj@4.10.0 arch=linux-rhel8-a64fx
-    "env OMP_NUM_THREADS=10 UV_PROJECT_ENVIRONMENT=compute_venv uv run main.py"
+    "env OMP_NUM_THREADS=1 UV_PROJECT_ENVIRONMENT=compute_venv uv run main.py"
 )
 
 
