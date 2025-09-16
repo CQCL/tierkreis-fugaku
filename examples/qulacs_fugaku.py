@@ -43,6 +43,7 @@ def pjsub_uv_executor(group_name: str, logs_path: Path) -> PJSUBExecutor:
         command=command,
         resource=ResourceSpec(nodes=5, memory_gb=None, gpus_per_node=None),
         walltime="00:15:00",
+        environment={"PJM_LLIO_GFSCACHE": "/vol0004"},
         mpi=MpiSpec(),
         output_path=Path(logs_path),
         error_path=Path(logs_path),
