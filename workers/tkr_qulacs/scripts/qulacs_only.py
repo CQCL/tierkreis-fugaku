@@ -44,12 +44,12 @@ def build_circuit(nqubits, depth, pairs):
 
 
 def benchfunc_noopt(circuit, nqubits):
-    st = QuantumState(nqubits)
+    st = QuantumState(nqubits, use_multi_cpu=True)
     circuit.update_quantum_state(st)
 
 
 def benchfunc(qco, circuit, nqubits):
-    st = QuantumState(nqubits)
+    st = QuantumState(nqubits, use_multi_cpu=True)
     qco.optimize_light(circuit)
     circuit.update_quantum_state(st)
 
