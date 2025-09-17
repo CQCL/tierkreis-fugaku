@@ -1,0 +1,5 @@
+type,job_id,time_elapsed
+
+submit,41338612,03:31
+compile,41338736,01:25
+submit,41338858,03:21

@@ -22,7 +22,7 @@ uv = UvExecutor(WORKERS_DIR, storage.logs_path)
 command = (
     ". /vol0004/apps/oss/spack/share/spack/setup-env.sh && "
     "spack load /slvpnrm && "  # load boost@1.83.0%fj@4.10.0 arch=linux-rhel8-a64fx
-    f"env OMP_NUM_THREADS={os.environ.get("OMP_NUM_THREADS", 24)} UV_PROJECT_ENVIRONMENT=compute_venv uv run main.py"
+    f"UV_PROJECT_ENVIRONMENT=compute_venv mpiexec -np 10 uv run main.py"
 )
 
 
