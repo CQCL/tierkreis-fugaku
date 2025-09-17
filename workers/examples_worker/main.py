@@ -16,7 +16,7 @@ def example_circuit_list() -> list[Circuit]:
     circ2.Rx(0.5, 0)
     circ2.CRz(0.3, 1, 0)
 
-    return [circ1, circ2]
+    return [circ1, circ2] * 100
 
 
 if __name__ == "__main__":
