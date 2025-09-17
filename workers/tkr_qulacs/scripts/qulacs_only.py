@@ -1,10 +1,16 @@
 import numpy as np
-from qulacs import QuantumCircuit, QuantumState
+from qulacs import QuantumCircuit, QuantumState, check_build_for_mpi
 from qulacs.gate import X, T, H, CNOT, ParametricRZ, ParametricRX, DenseMatrix
 from qulacs.circuit import QuantumCircuitOptimizer as QCO
 
 
 nqubits_list = range(4, 26)
+
+if check_build_for_mpi():
+    from mpi4py import MPI
+else:
+    print("Qulacs module was build without USE_MPI.")
+    exit()
 
 
 def first_rotation(circuit, nqubits):
