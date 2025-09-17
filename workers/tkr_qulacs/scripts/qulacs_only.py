@@ -1,8 +1,7 @@
-import numpy as np
 from qulacs import QuantumCircuit, QuantumState, check_build_for_mpi
 from qulacs.gate import X, T, H, CNOT, ParametricRZ, ParametricRX, DenseMatrix
 from qulacs.circuit import QuantumCircuitOptimizer as QCO
-
+from random import uniform
 
 nqubits_list = range(4, 26)
 
@@ -15,21 +14,21 @@ else:
 
 def first_rotation(circuit, nqubits):
     for k in range(nqubits):
-        circuit.add_RX_gate(k, np.random.rand())
-        circuit.add_RZ_gate(k, np.random.rand())
+        circuit.add_RX_gate(k, uniform(0, 4))
+        circuit.add_RZ_gate(k, uniform(0, 4))
 
 
 def mid_rotation(circuit, nqubits):
     for k in range(nqubits):
-        circuit.add_RZ_gate(k, np.random.rand())
-        circuit.add_RX_gate(k, np.random.rand())
-        circuit.add_RZ_gate(k, np.random.rand())
+        circuit.add_RZ_gate(k, uniform(0, 4))
+        circuit.add_RX_gate(k, uniform(0, 4))
+        circuit.add_RZ_gate(k, uniform(0, 4))
 
 
 def last_rotation(circuit, nqubits):
     for k in range(nqubits):
-        circuit.add_RZ_gate(k, np.random.rand())
-        circuit.add_RX_gate(k, np.random.rand())
+        circuit.add_RZ_gate(k, uniform(0, 4))
+        circuit.add_RX_gate(k, uniform(0, 4))
 
 
 def entangler(circuit, nqubits, pairs):
