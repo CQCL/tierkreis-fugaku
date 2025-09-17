@@ -18,7 +18,7 @@ def compile(circuits: Sequence[Circuit], optimisation_level: int) -> list[Circui
 @worker.task()
 def submit(circuits: Sequence[Circuit], n_shots: int) -> list[BackendResult]:
     print(os.environ.get("OMP_NUM_THREADS"))
-    return QulacsBackend().run_circuits(circuits, n_shots)
+    return QulacsBackend().run_circuits(circuits, n_shots, False)
 
 
 if __name__ == "__main__":

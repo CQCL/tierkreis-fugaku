@@ -19,12 +19,12 @@ executor = UvExecutor(WORKERS_DIR, storage.logs_path)
 def graph():
     g = GraphBuilder(EmptyModel, TKR[list[BackendResult]])
     circuits = g.task(example_circuit_list())
-    compiled_circuits = g.task(compile(circuits, g.const(2)))
+    compiled_circuits = g.task(compile(circuits, g.const(1)))
     results = g.task(submit(compiled_circuits, g.const(10000)))
     g.outputs(results)
     return g
 
 
 if __name__ == "__main__":
-    run_graph(storage, executor, graph().get_data(), {})
+    run_graph(storage, executor, graph().get_data(), {}, polling_interval_seconds=0.1)
     print(len(read_outputs(graph().get_data(), storage)))  # type: ignore
