@@ -22,7 +22,7 @@ uv = UvExecutor(WORKERS_DIR, storage.logs_path)
 command = (
     ". /vol0004/apps/oss/spack/share/spack/setup-env.sh && "
     "spack load /slvpnrm && "  # load boost@1.83.0%fj@4.10.0 arch=linux-rhel8-a64fx
-    f"UV_PROJECT_ENVIRONMENT=compute_venv mpiexec -np 10 uv run main.py"
+    "OMP_NUM_THREADS=12 UV_PROJECT_ENVIRONMENT=compute_venv mpiexec -np ${PJM_MPI_PROC} uv run main.py"
 )
 
 
@@ -40,9 +40,9 @@ def pjsub_uv_executor(group_name: str, logs_path: Path) -> PJSUBExecutor:
         job_name="tkr_symbolic_ciruits",
         account=group_name,
         command=command,
-        resource=ResourceSpec(nodes=10, memory_gb=None, gpus_per_node=None),
+        resource=ResourceSpec(nodes=1, memory_gb=None, gpus_per_node=None),
         walltime="00:15:00",
-        mpi=MpiSpec(max_proc_per_node=None, proc=10),
+        mpi=MpiSpec(max_proc_per_node=4),
         output_path=Path("./output"),
         error_path=Path("./errors"),
         environment={"PJM_LLIO_GFSCACHE": "/vol0004"},
