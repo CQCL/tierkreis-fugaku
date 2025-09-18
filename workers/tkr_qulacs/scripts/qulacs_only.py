@@ -6,6 +6,7 @@ from random import uniform
 nqubits_list = range(4, 26)
 
 if check_build_for_mpi():
+    print("MPI is enabled.")
     from mpi4py import MPI
 else:
     print("Qulacs module was build without USE_MPI.")
